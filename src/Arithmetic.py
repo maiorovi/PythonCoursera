@@ -1,5 +1,5 @@
 # coding=UTF-8
-__author__ = 'Егор'
+__author__ = 'tryharder'
 
 print "HEllo", "Egor"
 
