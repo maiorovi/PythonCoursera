@@ -1,11 +1,10 @@
 """
 Merge function for 2048 game.
 """
-l = [2, 2, 2, 2, 2]
+l = [2, 0, 2, 4]
 print l.__len__()
 
 def merge(line):
-    j = 0
     result_line = []
 
     for i in range(0, line.__len__()):
