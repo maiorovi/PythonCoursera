@@ -18,18 +18,18 @@ def merge(line):
     """
     result_line = []
 
-    for i in range(0, line.__len__()):
+    for i in range(0, len(line)):
        if (line[i] == 0):
            continue
        result_line.append(line[i])
-    for i in range(result_line.__len__(), line.__len__()):
+    for i in range(len(result_line), len(line)):
         result_line.append(0)
 
     final_result = []
     i = 0
 
-    while i < result_line.__len__() :
-        if (i + 1 == result_line.__len__()):
+    while i < len(result_line):
+        if (i + 1 == len(result_line)):
             final_result.append(result_line[i])
             i = i + 1
             continue
@@ -39,7 +39,7 @@ def merge(line):
         elif (result_line[i] != result_line[i+1]):
             final_result.append(result_line[i])
             i = i + 1
-    for i in range(final_result.__len__(), result_line.__len__()):
+    for i in range(len(final_result), len(result_line)):
         final_result.append(0)
 
     return final_result
@@ -77,7 +77,7 @@ class TwentyFortyEight:
 
         for row in range(self.get_grid_height()):
             for col in range(self.get_grid_width()):
-                result += self.grid[row][col].__str__() + " "
+                result += str(self.grid[row][col]) + " "
             result += ("\n")
 
         return result
