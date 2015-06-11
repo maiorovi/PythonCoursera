@@ -52,7 +52,11 @@ class TwentyFortyEight:
     def __init__(self, grid_height, grid_width):
         self.grid_height = grid_height
         self.grid_width = grid_width
-        self.grid = [[0 for col in range(grid_width)] for row in range(grid_height)]
+        self.up_initial_tile = [(0, x) for x in range(self.grid_width)]
+        self.down_initial_tile = [(self.grid_height - 1, x) for x in range(self.grid_width)]
+        self.left_initial_tile = [(x, 0) for x in range(self.get_grid_height())]
+        self.right_initial_tile = [(x, self.grid_width - 1) for x in range(self.get_grid_height())]
+        self.reset()
         pass
 
     def reset(self):
@@ -69,8 +73,14 @@ class TwentyFortyEight:
         """
         Return a string representation of the grid for debugging.
         """
-        # replace with your code
-        return ""
+        result = ""
+
+        for row in range(self.get_grid_height()):
+            for col in range(self.get_grid_width()):
+                result += self.grid[row][col].__str__() + " "
+            result += ("\n")
+
+        return result
 
     def get_grid_height(self):
         """
@@ -90,7 +100,46 @@ class TwentyFortyEight:
         Move all tiles in the given direction and add
         a new tile if any tiles moved.
         """
-        # replace with your code
+        length = 0
+        initial_tile = []
+        should_add_tile = False
+
+        if (direction == UP):
+            length = self.get_grid_height()
+            initial_tile = self.up_initial_tile
+        if (direction == DOWN):
+            length = self.get_grid_height()
+            initial_tile = self.down_initial_tile
+        if (direction == LEFT):
+            length = self.get_grid_height()
+            initial_tile = self.left_initial_tile
+        if (direction == RIGHT):
+            length = self.get_grid_height()
+            initial_tile = self.right_initial_tile
+
+        for initial_cell in initial_tile:
+            row = initial_cell[0]
+            col = initial_cell[1]
+            temp_list = []
+
+            for x in range(length):
+                temp_list.append(self.grid[row][col])
+                row = row + OFFSETS.get(direction)[0]
+                col = col + OFFSETS.get(direction)[1]
+
+            row = initial_cell[0]
+            col = initial_cell[1]
+            i = 0
+            for r in merge(temp_list):
+                if (temp_list[i] != r):
+                    should_add_tile = True
+                i = i + 1
+                self.grid[row][col] = r
+                row = row + OFFSETS.get(direction)[0]
+                col = col + OFFSETS.get(direction)[1]
+
+        if (should_add_tile):
+            self.new_tile()
         pass
 
     def new_tile(self):
@@ -101,7 +150,7 @@ class TwentyFortyEight:
         """
         col = random.randrange(self.get_grid_width())
         row = random.randrange(self.get_grid_height())
-        while (self.grid[col][row] != 0):
+        while (self.grid[row][col] != 0):
             col = random.randrange(self.get_grid_width())
             row = random.randrange(self.get_grid_height())
         value = random.randrange(0, 100)
@@ -127,9 +176,8 @@ class TwentyFortyEight:
         """
         return self.grid[row][col]
 
-object = TwentyFortyEight(2,5)
+object = TwentyFortyEight(4,4)
 
-print object.grid
-object.new_tile()
-object.new_tile()
-print object.grid
+print object
+object.move(1)
+print object
